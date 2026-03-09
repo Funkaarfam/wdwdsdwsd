@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Gallery</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="body">
+  <nav>
+    <a href="#">Blog</a>
+    <a href="mailto:info@artgallery.com">Email</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <h1 id="gallery-title">Art Gallery</h1>
+  <div class="gallery">
+    <h2 id="paint1-title">Sunset Painting</h2>
+    <img id="paint1-img" src="https://via.placeholder.com/400x300" alt="Painting">
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Replace dynamic content from server
+    fetch('/data.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('gallery-title').textContent = data.title || 'Art Gallery';
+        document.getElementById('body').style.background = data.background || '#ffffff';
+        document.getElementById('paint1-title').textContent = data.paint1.title || 'Sunset Painting';
+        document.getElementById('paint1-img').src = data.paint1.img || 'https://via.placeholder.com/400x300';
+      })
+      .catch(err => console.error('Error loading content:', err));
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "title": "My Art Gallery",
+  "background": "#ffffff",
+  "paint1": {
+    "title": "Sunset Painting",
+    "img": "https://via.placeholder.com/400x300"
+  }
+}
