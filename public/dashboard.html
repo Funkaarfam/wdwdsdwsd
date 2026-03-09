@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; background: #f0f2f5; }
+        .card { background: white; padding: 30px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        label { display: block; margin: 15px 0 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; }
+        .back-link { display: block; text-align: center; margin-top: 20px; text-decoration: none; color: #3498db; }
+    </style>
 </head>
 <body>
-<h1>Admin Dashboard</h1>
-<form action="/update" method="post">
-  <input type="text" name="title" placeholder="Website Title">
-  <input type="text" name="background" placeholder="Background Color or URL">
-  <input type="text" name="paint1_title" placeholder="Painting Title">
-  <input type="text" name="paint1_img" placeholder="Painting Image URL">
-  <button type="submit">Update</button>
-</form>
 
-<script src="js/main.js"></script>
+<div class="card">
+    <h2>Control Panel</h2>
+    <p>Logged in as: <strong>root</strong></p>
+    <hr>
+    
+    <label>Website Background Color:</label>
+    <input type="color" id="bgInput" style="height: 50px;">
+    
+    <label>Update Website Heading:</label>
+    <input type="text" id="titleInput" placeholder="New Gallery Title">
+    
+    <label>First Painting Image URL:</label>
+    <input type="text" id="imgInput" placeholder="https://example.com/image.jpg">
+    
+    <button onclick="saveChanges()">Apply Changes</button>
+    <a href="index.html" class="back-link">← Return to Website</a>
+</div>
+
+<script>
+    function saveChanges() {
+        const bg = document.getElementById('bgInput').value;
+        const title = document.getElementById('titleInput').value;
+        const img = document.getElementById('imgInput').value;
+
+        if(bg) localStorage.setItem('siteBg', bg);
+        if(title) localStorage.setItem('siteTitle', title);
+        if(img) localStorage.setItem('paint1', img);
+
+        alert("Site updated successfully!");
+    }
+</script>
+
 </body>
 </html>
