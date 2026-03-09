@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Art Gallery</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body id="body">
-  <nav>
-    <a href="#">Blog</a>
-    <a href="mailto:info@artgallery.com">Email</a>
-    <a href="login.html">Login</a>
-  </nav>
+<body>
+<div class="login-container">
+  <h1>Login</h1>
+  <form id="loginForm" action="/login" method="post">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+    <p id="error-msg" style="color:red; display:none;"></p>
+  </form>
+</div>
 
-  <h1 id="gallery-title">Art Gallery</h1>
-  <div class="gallery">
-    <h2 id="paint1-title">Sunset Painting</h2>
-    <img id="paint1-img" src="https://via.placeholder.com/400x300" alt="Painting">
-  </div>
+<script src="js/main.js"></script>
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const username = this.username.value.trim();
+  const password = this.password.value.trim();
+  const errorMsg = document.getElementById('error-msg');
 
-  <script src="js/main.js"></script>
-  <script>
-    // Replace dynamic content from server
-    fetch('/data.json')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('gallery-title').textContent = data.title || 'Art Gallery';
-        document.getElementById('body').style.background = data.background || '#ffffff';
-        document.getElementById('paint1-title').textContent = data.paint1.title || 'Sunset Painting';
-        document.getElementById('paint1-img').src = data.paint1.img || 'https://via.placeholder.com/400x300';
-      })
-      .catch(err => console.error('Error loading content:', err));
-  </script>
+  // Send login data to server
+  const formData = new URLSearchParams();
+  formData.append('username', username);
+  formData.append('password', password);
+
+  const res = await fetch('/login', {
+    method: 'POST',
+    body: formData
+  });
+  const text = await res.text();
+
+  if(text.includes('Enter username/password correctly!') || text.includes('SQL injection detected!')){
+    errorMsg.style.display = 'block';
+    errorMsg.textContent = text.replace(/<[^>]*>/g, ''); // strip HTML tags
+  } else {
+    window.location.href = '/dashboard.html';
+  }
+});
+</script>
 </body>
 </html>
